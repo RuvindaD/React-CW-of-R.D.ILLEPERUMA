@@ -130,7 +130,7 @@ function Item(){
 
     async function deleteItem(itemId:number){
         try {
-            await axios.delete(`http://localhost:8082/items/${itemId}`);
+            await axios.delete(`http://localhost:8082/items/${itemId}`,config);
             loadItems();
         } catch (error) {
            console.log(error); 
