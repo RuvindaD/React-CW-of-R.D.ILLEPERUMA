@@ -41,9 +41,10 @@ function Item(){
 
 
     useEffect(function(){
-        if(isAuthenticated)
+        if(isAuthenticated){
         loadItems();
         loadCategories();
+        }
     },[isAuthenticated])
 
     
