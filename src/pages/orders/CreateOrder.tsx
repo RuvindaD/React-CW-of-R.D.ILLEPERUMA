@@ -2,14 +2,24 @@ import { useEffect, useState } from "react";
 import ItemType from "../../types/ItemType";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../Context/AuthContext";
 
 function CreateOrder(){
 
+    const{isAuthenticated,jwtToken}=useAuth();
+
+
     const[items,setItems]=useState<ItemType[]>([]);
+    
+    const config={
+        headers:{
+            Autherization:`Bearer ${jwtToken}`
+        }
+    }
 
     async function loadItems() {
         try {
-            const response=await axios.get("http://localhost:8082/items");
+            const response=await axios.get("http://localhost:8082/items",config);
             setItems(response.data);
         } catch (error) {
             console.log(error);
@@ -19,8 +29,11 @@ function CreateOrder(){
     }
 
     useEffect(()=>{
+        if(isAuthenticated){
         loadItems();
-    },[])
+        }
+    },[isAuthenticated])
+
 const[orderedItems,setOrderedItems]=useState<ItemType[]>([]);
 const[total,SetTotal]=useState<number>(0);
 
